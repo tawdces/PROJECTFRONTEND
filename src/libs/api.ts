@@ -17,7 +17,7 @@ export async function fetchWithAuth(url: string, token: string, options?: Reques
 
 export async function getCampgrounds() {
   try {
-    const res = await fetch(`${process.env.BACKEND_URL}/campgrounds`);
+    const res = await fetch(`${API_URL}/campgrounds`);
     if (!res.ok) {
       const errorText = await res.text();
       throw new Error(`Failed to fetch campgrounds: ${res.status} ${errorText}`);
@@ -30,13 +30,13 @@ export async function getCampgrounds() {
 }
 
 export async function getCampground(id: string) {
-  const res = await fetch(`${process.env.BACKEND_URL}/campgrounds/${id}`);
+  const res = await fetch(`${API_URL}/campgrounds/${id}`);
   if (!res.ok) throw new Error('Failed to fetch campground');
   return res.json();
 }
 
 export async function createBooking(campgroundId: string, bookingDate: string, token: string) {
-  const res = await fetchWithAuth(`${process.env.BACKEND_URL}/campgrounds/${campgroundId}/bookings`, token, {
+  const res = await fetchWithAuth(`${API_URL}/campgrounds/${campgroundId}/bookings`, token, {
     method: 'POST',
     body: JSON.stringify({ bookingDate }),
   });
@@ -45,7 +45,7 @@ export async function createBooking(campgroundId: string, bookingDate: string, t
 }
 
 export async function getBookings(token: string) {
-  const res = await fetchWithAuth(`${process.env.BACKEND_URL}/bookings`, token);
+  const res = await fetchWithAuth(`${API_URL}/bookings`, token);
   if (!res.ok) throw new Error('Failed to fetch bookings');
   return res.json();
 }
@@ -56,7 +56,7 @@ export async function updateBooking(
   bookingDate: string,
   token: string
 ) {
-  const res = await fetchWithAuth(`${process.env.BACKEND_URL}/bookings/${bookingId}`, token, {
+  const res = await fetchWithAuth(`${API_URL}/bookings/${bookingId}`, token, {
     method: 'PUT',
     body: JSON.stringify({ campground: campgroundId, bookingDate }),
   });
@@ -65,7 +65,7 @@ export async function updateBooking(
 }
 
 export async function deleteBooking(bookingId: string, token: string) {
-  const res = await fetchWithAuth(`${process.env.BACKEND_URL}/bookings/${bookingId}`, token, {
+  const res = await fetchWithAuth(`${API_URL}/bookings/${bookingId}`, token, {
     method: 'DELETE',
   });
   if (!res.ok) throw new Error('Failed to delete booking');
@@ -73,7 +73,7 @@ export async function deleteBooking(bookingId: string, token: string) {
 }
 
 export async function registerUser(userData: { name: string; telephone: string; email: string; password: string }) {
-  const res = await fetch(`${process.env.BACKEND_URL}/auth/register`, {
+  const res = await fetch(`${API_URL}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userData),

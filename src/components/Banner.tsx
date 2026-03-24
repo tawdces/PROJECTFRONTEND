@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
 export default function Banner() {
@@ -9,15 +9,40 @@ export default function Banner() {
   const [index, setIndex] = useState(0);
   const { data: session } = useSession();
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % covers.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [covers.length]);
+
+  const handleAdvance = () => {
+    setIndex((prev) => (prev + 1) % covers.length);
+  };
+
   return (
-    <div className="relative w-full h-[70vh] md:h-[80vh] overflow-hidden cursor-pointer" onClick={() => setIndex((i) => i + 1)}>
-      <Image
-        src={covers[index % 4]}
-        alt="hero background"
-        fill
-        priority
-        className="object-cover"
-      />
+    <div className="relative w-full h-[70vh] md:h-[80vh] overflow-hidden cursor-pointer" onClick={handleAdvance}>
+      <div className="absolute inset-0 overflow-hidden">
+        <div
+          className="flex h-full transition-transform duration-700 ease-in-out"
+          style={{
+            transform: `translateX(-${index * 100}%)`,
+            willChange: "transform",
+          }}
+        >
+          {covers.map((cover, idx) => (
+            <div key={cover + idx} className="relative min-w-full h-full">
+              <Image
+                src={cover}
+                alt="hero background"
+                fill
+                priority={idx === 0}
+                className="object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
       <div className="absolute inset-0 bg-black/40" /> {/* dark overlay */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg max-w-4xl">

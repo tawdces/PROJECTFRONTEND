@@ -13,8 +13,8 @@ import {
   Divider,
 } from "@mui/material";
 
-export default async function CampgroundDetailPage({ params }: { params: { cid: string } }) {
-  const { cid } = params;
+export default async function CampgroundDetailPage({ params }: { params: Promise<{ cid: string }> }) {
+  const { cid } = await params;
   const campground = await getCampground(cid);
   const data = campground.data;
   const heroImage = data.imageUrl || "/img/cover.jpg";

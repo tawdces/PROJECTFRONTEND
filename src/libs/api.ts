@@ -40,7 +40,7 @@ export async function createBooking(campgroundId: string, bookingDate: string, t
     method: 'POST',
     body: JSON.stringify({ bookingDate }),
   });
-  if (!res.ok) throw new Error('Failed to create booking');
+  if (!res.ok) throw new Error('Failed to create booking (Maximum 3 Bookings)');
   return res.json();
 }
 

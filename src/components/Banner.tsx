@@ -20,11 +20,11 @@ export default function Banner() {
       />
       <div className="absolute inset-0 bg-black/40" /> {/* dark overlay */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg max-w-4xl">
-          where every event finds its venue
+        <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg max-w-4xl">
+          Find your perfect campsite, effortlessly
         </h1>
         <p className="mt-4 text-base md:text-xl text-white/90 max-w-2xl drop-shadow">
-          Finding the perfect venue has never been easier. Whether it's a wedding, corporate event, or private party, we help people find the right place.
+          Book campgrounds for any trip—quick escapes, group adventures, or solo retreats—all in one place.
         </p>
       </div>
       {session && (
